@@ -58,6 +58,7 @@ def health():
 
 if __name__ == '__main__':
     print("启动小红书 MCP HTTP 服务器...")
-    print("HTTP 端口: http://127.0.0.1:8000")
+    print("HTTP 端口: http://0.0.0.0:8000")
     print("工具列表: http://127.0.0.1:8000/tools")
-    app.run(host='127.0.0.1', port=8000, debug=False)
+    # 监听所有网络接口（0.0.0.0），这样手机可以通过局域网 IP 访问
+    app.run(host='0.0.0.0', port=8000, debug=False)
