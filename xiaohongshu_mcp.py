@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import json
 
 app = Flask(__name__)
 
@@ -30,6 +31,14 @@ TOOLS = [
     }
 ]
 
+# JSON-RPC 路由
+@app.route('/sse', methods=['GET', 'POST'])
+def sse_endpoint():
+    """MCP SSE 端点"""
+    if request.method == 'GET':
+        return jsonify({"status": "MCP SSE endpoint ready"})
+    return jsonify({"status": "ok"})
+
 @app.route('/tools', methods=['GET'])
 def list_tools():
     return jsonify({"tools": TOOLS})
@@ -59,6 +68,6 @@ def health():
 if __name__ == '__main__':
     print("启动小红书 MCP HTTP 服务器...")
     print("HTTP 端口: http://0.0.0.0:8000")
+    print("SSE 端点: http://127.0.0.1:8000/sse")
     print("工具列表: http://127.0.0.1:8000/tools")
-    # 监听所有网络接口（0.0.0.0），这样手机可以通过局域网 IP 访问
     app.run(host='0.0.0.0', port=8000, debug=False)
